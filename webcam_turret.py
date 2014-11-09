@@ -3,13 +3,16 @@
 from turretaim import Turret
 import sys
 
+if sys.version_info.major == 2:
+    input = raw_input
+
 class WebcamTurret(Turret):
     "Just like a regular Turret, but can also target based on image coordinates."
     def __init__(self, yaw_difference=135, pitch_difference=0, viewing_angle_horiz=24.0, viewing_angle_vert=18.0, res_horiz=640, res_vert=480, locked_mode=False):
         if sys.version_info.major > 2:
             super().__init__()
         else:
-            super(WebcamTurret, self).__init__()
+            Turret.__init__(self)
         self.yaw_difference = yaw_difference
         self.pitch_difference = pitch_difference
         self.viewing_angle_horiz = viewing_angle_horiz
