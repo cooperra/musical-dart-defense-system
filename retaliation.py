@@ -202,7 +202,8 @@ def setup_usb():
         try:
             DEVICE.detach_kernel_driver(0)
         except Exception:
-            pass # already unregistered    
+            print("already unregistered")
+            #pass # already unregistered    
 
     DEVICE.set_configuration()
 
