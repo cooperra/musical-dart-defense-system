@@ -77,7 +77,7 @@ import time
 import socket
 import re
 import json
-import urllib2
+import urllib3
 import base64
 
 import usb.core
@@ -278,7 +278,7 @@ def jenkins_target_user(user):
 
 
 def read_url(url):
-    request = urllib2.Request(url)
+    request = urllib3.Request(url)
 
     if HTTPAUTH_USER and HTTPAUTH_PASS:
         authstring = base64.encodestring('%s:%s' % (HTTPAUTH_USER, HTTPAUTH_PASS))
