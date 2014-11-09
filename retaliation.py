@@ -156,26 +156,26 @@ DEVICE = None
 DEVICE_TYPE = None
 
 def usage():
-    print "Usage: retaliation.py [command] [value]"
-    print ""
-    print "   commands:"
-    print "     stalk - sit around waiting for a Jenkins CI failed build"
-    print "             notification, then attack the perpetrator!"
-    print ""
-    print "     up    - move up <value> milliseconds"
-    print "     down  - move down <value> milliseconds"
-    print "     right - move right <value> milliseconds"
-    print "     left  - move left <value> milliseconds"
-    print "     fire  - fire <value> times (between 1-4)"
-    print "     zero  - park at zero position (bottom-left)"
-    print "     pause - pause <value> milliseconds"
-    print "     led   - turn the led on or of (1 or 0)"
-    print ""
-    print "     <command_set_name> - run/test a defined COMMAND_SET"
-    print "             e.g. run:"
-    print "                  retaliation.py 'chris'"
-    print "             to test targeting of chris as defined in your command set."
-    print ""
+    print("Usage: retaliation.py [command] [value]")
+    print("")
+    print("   commands:")
+    print("     stalk - sit around waiting for a Jenkins CI failed build")
+    print("             notification, then attack the perpetrator!")
+    print("")
+    print("     up    - move up <value> milliseconds")
+    print("     down  - move down <value> milliseconds")
+    print("     right - move right <value> milliseconds")
+    print("     left  - move left <value> milliseconds")
+    print("     fire  - fire <value> times (between 1-4)")
+    print("     zero  - park at zero position (bottom-left)")
+    print("     pause - pause <value> milliseconds")
+    print("     led   - turn the led on or of (1 or 0)")
+    print("")
+    print("     <command_set_name> - run/test a defined COMMAND_SET")
+    print("             e.g. run:")
+    print("                  retaliation.py 'chris'")
+    print("             to test targeting of chris as defined in your command set.")
+    print("")
 
 
 def setup_usb():
@@ -255,7 +255,7 @@ def run_command(command, value):
             send_cmd(FIRE)
             time.sleep(4.5)
     else:
-        print "Error: Unknown command: '%s'" % command
+        print("Error: Unknown command: '%s'" % command)
 
 
 def run_command_set(commands):
@@ -274,7 +274,7 @@ def jenkins_target_user(user):
             match = True
             break
     if not match:
-        print "WARNING: No target command set defined for user %s" % user
+        print("WARNING: No target command set defined for user %s" % user)
 
 
 def read_url(url):
@@ -320,10 +320,10 @@ def jenkins_wait_for_event():
             if phase == "FINISHED" and status.startswith("FAIL"):
                 target = jenkins_get_responsible_user(notification_data["name"])
                 if target == None:
-                    print "WARNING: Could not identify the user who broke the build!"
+                    print("WARNING: Could not identify the user who broke the build!")
                     continue
 
-                print "Build Failed! Targeting user: " + target
+                print("Build Failed! Targeting user: " + target)
                 jenkins_target_user(target)
         except:
             pass
@@ -338,7 +338,7 @@ def main(args):
     setup_usb()
 
     if args[1] == "stalk":
-        print "Listening and waiting for Jenkins failed build events..."
+        print("Listening and waiting for Jenkins failed build events...")
         jenkins_wait_for_event()
         # Will never return
         return
