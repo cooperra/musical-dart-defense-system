@@ -27,6 +27,9 @@ class WebcamTurret(Turret):
     def aim_center(self):
         self.aim_at_image_coords(self.res_horiz / 2, self.res_vert / 2)
 
+    def set_centered(self):
+        self.set_angle(self.yaw_difference, self.pitch_difference)
+        
     def aim_at_image_coords(self, x, y):
         "Relative to top left of webcam image."
         yaw, pitch = self.image_coord_to_turret_angles(x, y)
@@ -35,7 +38,32 @@ class WebcamTurret(Turret):
     def fire_at_image_coords(self, x, y, amt):
         "Relative to top left of webcam image."
         yaw, pitch = self.image_coord_to_turret_angles(x, y)
-        self.attack(yaw, pitch, amt)
+        self.fire_at(yaw, pitch, amt)
+
+    def attack_face(self, face):
+        mirrored = True
+        (x, y, w, h) = face
+        if mirrored:
+            x = self.res_horiz - x
+            center_x = x - w / 2
+            center_y = y + h / 2
+        else:
+            center_x = x + w / 2
+            center_y = y + h / 2
+        print("%r:%r" % (center_x, center_y))
+        if self.is_aiming_at_face(face):
+            self.fire(1)
+        else:
+            self.fire_at_image_coords(center_x, center_y, 1)
+
+    def is_aiming_at_face(self, face):
+        (x, y, w, h) = face
+        self.stop()
+        top_left_turret_angles = self.image_coord_to_turret_angles(x, y)
+        bottom_right_turret_angles = self.image_coord_to_turret_angles(x + w, y + h)
+        yaw_is_good = self.yaw > bottom_right_turret_angles[0] and self.yaw < top_left_turret_angles[0]
+        pitch_is_good = self.pitch > bottom_right_turret_angles[1] and self.pitch < top_left_turret_angles[1]
+        return yaw_is_good and pitch_is_good
         
     def image_coord_to_webcam_angles(self, x, y):
         "Relative to top left of webcam image. Result is relative to center"
@@ -103,7 +131,7 @@ def main():
         if command_line[0] == 'center':
             t.aim_center()
         if command_line[0] == 'centered':
-            t.set_angle(t.yaw_difference, t.pitch_difference)
+            t.set_centered()
         if command_line[0] == 'lock':
             t.locked_mode = True
         if command_line[0] == 'unlock':

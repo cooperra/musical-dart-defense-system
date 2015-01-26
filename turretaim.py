@@ -20,6 +20,7 @@ MAX_PITCH = 30 # maybe?
 PITCH_SPEED = (MAX_PITCH - MIN_PITCH) / (PITCH_TIME * 1000.0) # 40 degrees over 1.5 seconds
 PITCH_FRONT = 0
 SHOT_DURATION = 4.5
+SHOT_WARMUP = 0.5
 
 if sys.version_info.major == 2:
     input = raw_input
@@ -74,9 +75,17 @@ class Turret:
             self.queue.insert(0, ("setyaw", yaw))
 
     def fire(self, amt):
+        continueing = status == re.FIRE
         self.stop()
         self.queue = [("fire", amt)]
+        if not continueing:
+            self.queue.append(("sleep", SHOT_WARMUP)) # add to front of queue
         self.do_next_queue_action()
+
+    #def keep_firing(self, amt):
+    #    # TODO: Not stopping has got to be a bad idea
+    #    self.queue = [("fire", amt)]
+    #    self.do_next_queue_action()
 
     def fire_at(self, yaw, pitch, amt):
         "Interrupts the current operation to aim and fire in the desired direction"
