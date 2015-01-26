@@ -1,0 +1,8 @@
+ 
+The dataset files are in the att_faces folder
+
+> facerec.py is used for recording faces for positive dataset
+> train.py uses Eigen Faces to classify the detected faces
+> test_model.py reads the live feed and classifies the faces
+> fetch_user_playlist.py, fetches starred playlist of user
+> pyspotify_login_1.py uses the username and reads the songs list off of the data.txt file and then uses it to play music.
