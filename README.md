@@ -44,12 +44,12 @@ Dependencies: pyusb, python-urllib3
 
 This should work:
 
-  $ sudo apt-get install python-urllib3 python-pip
-  $ sudo pip install pyusb
+    $ sudo apt-get install python-urllib3 python-pip
+    $ sudo pip install pyusb
 
 Then:
 
-  $ chmod +x turretaim.py retaliation.py webcam_turret.py
+    $ chmod +x turretaim.py retaliation.py webcam_turret.py
 
 ### Controlling the turret
 
@@ -67,7 +67,7 @@ You may need to tweak globals in the files to calibrate the turret. The movement
 
 To control the turret directly:
 
-  $ ./turretaim.py
+    $ ./turretaim.py
 
 This gives you an interactive prompt to control the turret. 
 
@@ -81,7 +81,7 @@ Turret> exit
 
 Also, you'll probably have to run as root for it to work. Otherwise, you'll probably lack permissions for the low-level USB control that retaliation.py needs.
 
-  $ sudo ./turretaim.py
+    $ sudo ./turretaim.py
 
 #### webcam_turret.py
 
